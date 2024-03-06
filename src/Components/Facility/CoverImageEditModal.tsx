@@ -1,4 +1,3 @@
-import axios from "axios";
 import {
   ChangeEventHandler,
   useCallback,
@@ -108,15 +107,16 @@ const CoverImageEditModal = ({
 
     setIsUploading(true);
     try {
-      const response = await axios.post(
+      const response = await fetch(
         `/api/v1/facility/${facility.id}/cover_image/`,
-        formData,
         {
+          method: "POST",
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization:
               "Bearer " + localStorage.getItem(LocalStorageKeys.accessToken),
           },
+          body: JSON.stringify(formData),
         }
       );
       if (response.status === 200) {
